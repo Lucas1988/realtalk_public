@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>RealTalk</title>
+  <style>
+    body {
+      position: relative;
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: #000000;
+      font-family: Verdana, sans-serif;
+      color: #333;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 1;
+      z-index: -1;
+    }
+
+    .container {
+      text-align: center;
+      margin: 1%;  /* Reduced margin for a larger container */
+      background: #000000;
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+      height: 95vh;  /* Set the height of the container to 95% of the viewport height */
+      width: 98%;  /* Set the width of the container to 98% of the viewport width */
+      overflow: auto;  /* Enables scrolling if content overflows */
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .small-text {
+      font-size: 1.125rem;
+      margin-bottom: 2rem;
+      color: #666;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .input-group label {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      color: #FFFFFF;
+    }
+
+    .input-group input, .input-group button {
+      font-size: 1.125rem;
+      padding: 0.75rem;
+      width: 100%;
+      max-width: 300px;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .input-group input[type="file"] {
+      padding: 0.5rem;
+    }
+
+    .input-group input {
+      background: #eee;
+    }
+
+    .input-group button {
+      font-size: 1.125rem;
+      padding: 0.75rem;
+      width: 100%;
+      max-width: 300px;
+      border: 2px solid white; /* Border color */
+      border-radius: 25px; /* Rounded corners */
+      background: transparent; /* Transparent background */
+      color: white; /* Text color */
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .input-group button:hover {
+      background-color: rgba(255, 255, 255, 0.1); /* Slightly change the background color on hover */
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="input-group">
+      <label for="avatarUpload">Upload your avatar here:</label>
+      <input type="file" accept="image/*" id="avatarUpload" onchange="handleAvatarUpload(event)">
+    </div>
+
+    <div class="input-group">
+      <label for="nameInput"></label>
+      <input type="text" id="nameInput" placeholder="Your name">
+      <button onclick="confirmName()">Confirm</button>
+    </div>
+
+    <div class="input-group">
+      <button onclick="startApp()">Start training</button>
+    </div>
+  </div>
+
+  <script>
+    function startApp() {
+      window.location.href = 'index2.html';
+    }
+
+    function handleAvatarUpload(event) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        // Save the DataURL in local storage
+        window.localStorage.setItem('avatar', e.target.result);
+      };
+
+      reader.readAsDataURL(file);
+    }
+
+    function confirmName() {
+      const nameInput = document.getElementById('nameInput');
+      if (nameInput.value !== '') {
+        username = nameInput.value;
+        // store the username in localStorage
+        window.localStorage.setItem('username', username);
+        nameInput.value = '';  // Clear the input field
+        nameInput.disabled = true;  // Disable the input field after confirming the name
+        nameInput.placeholder = 'Name confirmed';
+      }
+    }
+  </script>
+</body>
+</html>
